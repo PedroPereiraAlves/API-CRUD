@@ -22,11 +22,10 @@ namespace SistemaDeTarefas
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddEntityFrameworkSqlServer()
-                .AddDbContext<SistemaTarefasDBContext>
-                (
-                    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase"))
-                );
+            builder.Services.AddDbContext<SistemaTarefasDBContext>(options =>
+            {
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
             builder.Services.AddScoped<IViaCepIntegracao, ViaCepIntegracao>();
